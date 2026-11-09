@@ -1,0 +1,23 @@
+site_name: Documentação Hostask
+site_description: Arquitetura e regras de negócio do Hostask
+site_author: Raquel Novelli
+
+theme:
+  name: material
+  language: pt-BR
+  palette:
+    primary: amber
+    accent: amber
+
+nav:
+  - Início: index.md
+  - Arquitetura: arquitetura.md
+  - Regras de Negócio e Fluxos: regras-negocio.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - tables
+  - fenced_code
