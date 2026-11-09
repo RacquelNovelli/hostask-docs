@@ -1,0 +1,1137 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Arquitetura e regras de negócio do Hostask">
+      
+      
+        <meta name="author" content="Raquel Novelli">
+      
+      
+      
+        <link rel="prev" href="../arquitetura/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Regras de Negócio e Fluxos - Documentação Hostask</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#regras-de-negocio-e-fluxos" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Documentação Hostask" class="md-header__button md-logo" aria-label="Documentação Hostask" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentação Hostask
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Regras de Negócio e Fluxos
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Documentação Hostask" class="md-nav__button md-logo" aria-label="Documentação Hostask" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentação Hostask
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitetura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regras de Negócio e Fluxos
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regras de Negócio e Fluxos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-perfis-de-acesso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Perfis de acesso
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-reservas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Reservas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Reservas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodo-e-receita-proporcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Período e receita proporcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ocupacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ocupação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acompanhamento-operacional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acompanhamento operacional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-financeiro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Financeiro
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Financeiro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resultado-ao-proprietario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resultado ao proprietário
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comissao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comissão
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reembolso-por-danos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reembolso por danos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#despesas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Despesas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#margem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Margem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodos-do-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Períodos do dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-manutencao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Manutenção
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-despesas-fixas-recorrentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Despesas fixas recorrentes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-limpezas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Limpezas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-estoque-e-inventario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Estoque e inventário
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-relatorios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Relatórios
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-principais-fluxos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Principais fluxos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Principais fluxos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cadastro-e-acompanhamento-de-reserva" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cadastro e acompanhamento de reserva
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#registro-de-manutencao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registro de manutenção
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lancamento-de-despesa-recorrente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lançamento de despesa recorrente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prestacao-de-contas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prestação de contas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-perfis-de-acesso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Perfis de acesso
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-reservas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Reservas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Reservas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodo-e-receita-proporcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Período e receita proporcional
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ocupacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ocupação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acompanhamento-operacional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acompanhamento operacional
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-financeiro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Financeiro
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Financeiro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resultado-ao-proprietario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resultado ao proprietário
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comissao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comissão
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reembolso-por-danos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reembolso por danos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#despesas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Despesas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#margem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Margem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodos-do-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Períodos do dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-manutencao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Manutenção
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-despesas-fixas-recorrentes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Despesas fixas recorrentes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-limpezas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Limpezas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-estoque-e-inventario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Estoque e inventário
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-relatorios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Relatórios
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-principais-fluxos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Principais fluxos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Principais fluxos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cadastro-e-acompanhamento-de-reserva" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cadastro e acompanhamento de reserva
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#registro-de-manutencao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registro de manutenção
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lancamento-de-despesa-recorrente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lançamento de despesa recorrente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prestacao-de-contas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prestação de contas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="regras-de-negocio-e-fluxos">Regras de negócio e fluxos</h1>
+<h2 id="1-objetivo">1. Objetivo</h2>
+<p>O Hostask centraliza a gestão de imóveis de aluguel de temporada, reunindo reservas, limpezas, manutenção, estoque, inventário e financeiro.</p>
+<p>Também permite organizar a prestação de contas mensal ao proprietário de cada imóvel.</p>
+<h2 id="2-perfis-de-acesso">2. Perfis de acesso</h2>
+<table>
+<thead>
+<tr>
+<th>Perfil</th>
+<th>Acesso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Administrador</td>
+<td>Todos os módulos.</td>
+</tr>
+<tr>
+<td>Limpeza</td>
+<td>Limpezas, Manutenção e Estoque.</td>
+</tr>
+</tbody>
+</table>
+<p>Na implementação descrita, o perfil é escolhido na entrada e mantido na sessão.</p>
+<h2 id="3-reservas">3. Reservas</h2>
+<p>Cada reserva pertence a um imóvel e contém:</p>
+<ul>
+<li>Hóspede.</li>
+<li>Check-in e check-out.</li>
+<li>Valor bruto da estadia.</li>
+<li>Taxa Airbnb.</li>
+<li>Taxa de limpeza.</li>
+<li>Caução.</li>
+<li>Status.</li>
+</ul>
+<h3 id="status">Status</h3>
+<ul>
+<li>Confirmada.</li>
+<li>Em andamento.</li>
+<li>Concluída.</li>
+<li>Cancelada.</li>
+</ul>
+<p>Reservas confirmadas, em andamento e concluídas são consideradas no financeiro. Reservas canceladas são desconsideradas.</p>
+<h3 id="periodo-e-receita-proporcional">Período e receita proporcional</h3>
+<p>Uma reserva participa do mês analisado quando seu período se sobrepõe a ele: o check-in ocorre antes do fim do mês e o check-out ocorre depois do início.</p>
+<p>Quando a estadia atravessa meses, o valor bruto é dividido proporcionalmente pelas diárias de cada mês.</p>
+<p><strong>Exemplo:</strong> uma reserva de 10 diárias, com valor bruto total de R$ 1.000, tem 4 diárias no primeiro mês e 6 no segundo. A receita bruta será de R$ 400 no primeiro e R$ 600 no segundo.</p>
+<h3 id="ocupacao">Ocupação</h3>
+<p>A ocupação corresponde aos dias ocupados no mês divididos pela quantidade de dias daquele mês.</p>
+<p>Reservas canceladas não entram no cálculo.</p>
+<h3 id="acompanhamento-operacional">Acompanhamento operacional</h3>
+<p>A reserva inclui acompanhamento de check-in, check-out, caução retida, multa e avaliação do hóspede.</p>
+<h2 id="4-financeiro">4. Financeiro</h2>
+<p>Receitas e despesas são registradas como lançamentos, com categoria, valor e data.</p>
+<p>A data do lançamento determina o mês em que ele aparece.</p>
+<p>A receita de estadias apresentada por reserva segue a divisão proporcional descrita na seção de reservas.</p>
+<h3 id="resultado-ao-proprietario">Resultado ao proprietário</h3>
+<pre><code>Receita bruta de estadias
+− Comissão do administrador
+− Despesas operacionais
++ Reembolso por danos
+= Receita líquida ao proprietário
+</code></pre>
+<h3 id="comissao">Comissão</h3>
+<p>A comissão do administrador é de 20% sobre a receita bruta de estadias.</p>
+<p>Reembolsos por danos não entram na base de cálculo da comissão.</p>
+<h3 id="reembolso-por-danos">Reembolso por danos</h3>
+<p>É registrado em uma tela própria, com categoria específica.</p>
+<p>Seu valor é somado ao resultado do proprietário, sem desconto de comissão.</p>
+<h3 id="despesas">Despesas</h3>
+<p>São cadastradas no módulo Financeiro com a data escolhida pelo usuário.</p>
+<p>As categorias incluem limpeza, manutenção, energia, água, internet, lixo, condomínio, IPTU, materiais, comissão e outras.</p>
+<h3 id="margem">Margem</h3>
+<p>A margem é calculada dividindo a receita líquida pela soma da receita bruta de estadias com os reembolsos.</p>
+<h3 id="periodos-do-dashboard">Períodos do dashboard</h3>
+<ul>
+<li>Mês atual.</li>
+<li>Mês anterior.</li>
+<li>Últimos 12 meses.</li>
+</ul>
+<h2 id="5-manutencao">5. Manutenção</h2>
+<p>Ao salvar uma manutenção com custo maior que zero, o sistema cria uma despesa na categoria Manutenção, vinculada ao chamado.</p>
+<p>A data do lançamento é a data da manutenção informada no cadastro. Isso permite registrar uma manutenção retroativa no mês correspondente.</p>
+<p>Quando o custo é editado, o lançamento existente é atualizado, sem duplicação.</p>
+<p>Se o custo passar a zero, a despesa vinculada é removida.</p>
+<h2 id="6-despesas-fixas-recorrentes">6. Despesas fixas recorrentes</h2>
+<p>São cadastradas por imóvel, com valor estimado e dia de vencimento.</p>
+<p>Exemplos: energia, água, internet, condomínio e IPTU.</p>
+<p>O cadastro não gera lançamentos automaticamente. O usuário utiliza a opção de lançar uma despesa individual ou lançar as despesas do mês atual.</p>
+<p>Cada despesa é identificada como Lançada ou Pendente no mês.</p>
+<h2 id="7-limpezas">7. Limpezas</h2>
+<p>Cada limpeza pode conter responsável, checklist, custo e fotos.</p>
+<p>As limpezas aparecem no relatório do proprietário.</p>
+<p>O custo da limpeza só participa do total de despesas quando também existe um lançamento correspondente no Financeiro.</p>
+<h2 id="8-estoque-e-inventario">8. Estoque e inventário</h2>
+<p>O estoque registra a quantidade atual e a quantidade mínima dos itens.</p>
+<p>O sistema apresenta alertas de estoque baixo e utiliza essas informações no controle de inventário.</p>
+<h2 id="9-relatorios">9. Relatórios</h2>
+<p>O relatório do proprietário é gerado por imóvel e por mês, com seleção dos últimos 24 meses.</p>
+<p>Apresenta:</p>
+<ul>
+<li>Demonstrativo de resultado.</li>
+<li>Reservas com valores proporcionais.</li>
+<li>Despesas detalhadas.</li>
+<li>Limpezas.</li>
+<li>Gráficos.</li>
+<li>Área para assinatura.</li>
+</ul>
+<p>Pode ser impresso ou salvo em PDF.</p>
+<p>O sistema também disponibiliza informe de rendimentos e exportações em CSV e PDF.</p>
+<h2 id="10-principais-fluxos">10. Principais fluxos</h2>
+<h3 id="cadastro-e-acompanhamento-de-reserva">Cadastro e acompanhamento de reserva</h3>
+<ol>
+<li>O administrador seleciona o imóvel.</li>
+<li>Informa hóspede, datas e valores.</li>
+<li>Define o status e salva.</li>
+<li>Acompanha check-in e check-out.</li>
+<li>Atualiza o status conforme o andamento.</li>
+<li>As reservas válidas entram nos cálculos do período correspondente.</li>
+</ol>
+<h3 id="registro-de-manutencao">Registro de manutenção</h3>
+<ol>
+<li>O usuário cadastra o chamado.</li>
+<li>Informa a data e o custo.</li>
+<li>Salva o registro.</li>
+<li>Se o custo for maior que zero, o sistema cria a despesa vinculada.</li>
+<li>Alterações no custo atualizam o lançamento.</li>
+<li>Se o custo passar a zero, o lançamento é removido.</li>
+</ol>
+<h3 id="lancamento-de-despesa-recorrente">Lançamento de despesa recorrente</h3>
+<ol>
+<li>O administrador cadastra a despesa fixa do imóvel.</li>
+<li>Consulta as despesas pendentes do mês.</li>
+<li>Seleciona o lançamento individual ou do mês atual.</li>
+<li>O sistema cria os lançamentos e atualiza a indicação de lançamento.</li>
+</ol>
+<h3 id="prestacao-de-contas">Prestação de contas</h3>
+<ol>
+<li>O administrador seleciona o imóvel e o mês.</li>
+<li>Confere as reservas e suas receitas proporcionais.</li>
+<li>Confere despesas e reembolsos.</li>
+<li>Verifica a comissão e o resultado líquido.</li>
+<li>Gera o relatório para impressão ou PDF.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
